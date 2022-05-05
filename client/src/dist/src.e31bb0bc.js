@@ -4391,183 +4391,7 @@ function registerCoreComponents(variant) {
 
 
 registerCoreComponents('');
-},{"@firebase/component":"node_modules/@firebase/component/dist/esm/index.esm2017.js","@firebase/logger":"node_modules/@firebase/logger/dist/esm/index.esm2017.js","@firebase/util":"node_modules/@firebase/util/dist/index.esm2017.js"}],"node_modules/firebase/app/dist/index.esm.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _app = require("@firebase/app");
-
-Object.keys(_app).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _app[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function () {
-      return _app[key];
-    }
-  });
-});
-var name = "firebase";
-var version = "9.7.0";
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-(0, _app.registerVersion)(name, version, 'app');
-},{"@firebase/app":"node_modules/@firebase/app/dist/esm/index.esm2017.js"}],"nave.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Nave = /*#__PURE__*/function () {
-  function Nave(juego) {
-    _classCallCheck(this, Nave);
-
-    this.juego = juego;
-    this.posicion = {
-      x: 0,
-      y: 0
-    };
-    this.limite = {
-      i: this.juego.wi,
-      d: this.juego.wd
-    };
-    this.tipo = 0;
-    this.w = 0;
-    this.h = 0;
-    this.velocidad = {
-      x: 0,
-      y: 0,
-      max: 10
-    };
-  }
-
-  _createClass(Nave, [{
-    key: "dibujar",
-    value: function dibujar() {
-      this.crearNave(this.juego.ctx, this.posicion.x, this.posicion.y, this.w, this.h, this.tipo);
-    }
-  }, {
-    key: "actualizar",
-    value: function actualizar() {
-      var _this = this;
-
-      this.cambiarDeTamaño();
-      this.juego.invasores.forEach(function (invasor) {
-        if (_this.posicion.y <= invasor.posicion.y + invasor.h) _this.juego.vidas = 0;
-      });
-      this.posicion.x += this.velocidad.x;
-      if (this.posicion.x <= this.limite.i) this.posicion.x = this.limite.i;
-      if (this.posicion.x + this.w >= this.limite.d) this.posicion.x = this.limite.d - this.w;
-    }
-  }, {
-    key: "crearNave",
-    value: function crearNave(ctx, x, y, w, h, tipo) {
-      var navecita = {
-        0: [[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [4, 4, 4, 0, 3, 3, 2, 3, 3, 0, 4, 4, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 4], [4, 3, 4, 3, 0, 3, 0, 3, 0, 3, 4, 3, 4], [4, 3, 4, 0, 0, 3, 0, 3, 0, 0, 4, 3, 4], [4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4], [0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
-        1: [[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 3, 2, 3, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 3, 2, 3, 0, 0, 0, 1, 0], [4, 4, 4, 0, 3, 3, 2, 3, 3, 0, 4, 4, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 4], [4, 3, 4, 3, 0, 3, 0, 3, 0, 3, 4, 3, 4], [4, 3, 4, 0, 0, 3, 0, 3, 0, 0, 4, 3, 4], [4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4], [0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-      };
-      var color = {
-        1: "yellow",
-        2: "red",
-        3: "aqua",
-        4: "brown"
-      };
-      w = w / 13;
-      h = h / 21;
-      navecita[tipo].forEach(function (fila, fi) {
-        fila.forEach(function (columna, ci) {
-          if (columna > 0) {
-            ctx.fillStyle = color[columna];
-            ctx.fillRect(x + ci * w, y + fi * h, w, h);
-          }
-        });
-      });
-    }
-  }, {
-    key: "cambiarDeTama\xF1o",
-    value: function cambiarDeTamaño() {
-      this.w = this.juego.wj / 11;
-      this.h = this.juego.h / 15;
-      this.limite.i = this.juego.wi;
-      this.limite.d = this.juego.wd;
-      this.posicion.y = this.juego.h - this.h - 20;
-    }
-  }, {
-    key: "izquierda",
-    value: function izquierda() {
-      this.velocidad.x = -this.velocidad.max;
-    }
-  }, {
-    key: "derecha",
-    value: function derecha() {
-      this.velocidad.x = this.velocidad.max;
-    }
-  }, {
-    key: "detener",
-    value: function detener() {
-      this.velocidad.x = 0;
-    }
-  }]);
-
-  return Nave;
-}();
-
-exports.default = Nave;
-},{}],"colision.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.colision = colision;
-
-function colision(objeto1, objeto2) {
-  var p = {
-    d: objeto1.posicion.y + objeto1.h,
-    u: objeto1.posicion.y,
-    l: objeto1.posicion.x,
-    r: objeto1.posicion.x + objeto1.w
-  };
-  var o = {
-    d: objeto2.posicion.y + objeto2.h,
-    u: objeto2.posicion.y,
-    l: objeto2.posicion.x,
-    r: objeto2.posicion.x + objeto2.w
-  };
-
-  if (p.r >= o.l && p.l <= o.r && p.u < o.d && p.d > o.u) {
-    return true;
-  }
-
-  return false;
-}
-},{}],"node_modules/process/browser.js":[function(require,module,exports) {
+},{"@firebase/component":"node_modules/@firebase/component/dist/esm/index.esm2017.js","@firebase/logger":"node_modules/@firebase/logger/dist/esm/index.esm2017.js","@firebase/util":"node_modules/@firebase/util/dist/index.esm2017.js"}],"node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -20748,7 +20572,144 @@ Object.keys(_database).forEach(function (key) {
     }
   });
 });
-},{"@firebase/database":"node_modules/@firebase/database/dist/index.esm2017.js"}],"laser.js":[function(require,module,exports) {
+},{"@firebase/database":"node_modules/@firebase/database/dist/index.esm2017.js"}],"nave.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Nave = /*#__PURE__*/function () {
+  function Nave(juego) {
+    _classCallCheck(this, Nave);
+
+    this.juego = juego;
+    this.posicion = {
+      x: 0,
+      y: 0
+    };
+    this.limite = {
+      i: this.juego.wi,
+      d: this.juego.wd
+    };
+    this.tipo = 0;
+    this.w = 0;
+    this.h = 0;
+    this.velocidad = {
+      x: 0,
+      y: 0,
+      max: 10
+    };
+  }
+
+  _createClass(Nave, [{
+    key: "dibujar",
+    value: function dibujar() {
+      this.crearNave(this.juego.ctx, this.posicion.x, this.posicion.y, this.w, this.h, this.tipo);
+    }
+  }, {
+    key: "actualizar",
+    value: function actualizar() {
+      var _this = this;
+
+      this.cambiarDeTamaño();
+      this.juego.invasores.forEach(function (invasor) {
+        if (_this.posicion.y <= invasor.posicion.y + invasor.h) _this.juego.vidas = 0;
+      });
+      this.posicion.x += this.velocidad.x;
+      if (this.posicion.x <= this.limite.i) this.posicion.x = this.limite.i;
+      if (this.posicion.x + this.w >= this.limite.d) this.posicion.x = this.limite.d - this.w;
+    }
+  }, {
+    key: "crearNave",
+    value: function crearNave(ctx, x, y, w, h, tipo) {
+      var navecita = {
+        0: [[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [4, 4, 4, 0, 3, 3, 2, 3, 3, 0, 4, 4, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 4], [4, 3, 4, 3, 0, 3, 0, 3, 0, 3, 4, 3, 4], [4, 3, 4, 0, 0, 3, 0, 3, 0, 0, 4, 3, 4], [4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4], [0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
+        1: [[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 3, 2, 3, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 3, 2, 3, 0, 0, 0, 1, 0], [4, 4, 4, 0, 3, 3, 2, 3, 3, 0, 4, 4, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4], [4, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 4], [4, 3, 4, 3, 0, 3, 0, 3, 0, 3, 4, 3, 4], [4, 3, 4, 0, 0, 3, 0, 3, 0, 0, 4, 3, 4], [4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4], [0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+      };
+      var color = {
+        1: "yellow",
+        2: "red",
+        3: "aqua",
+        4: "brown"
+      };
+      w = w / 13;
+      h = h / 21;
+      navecita[tipo].forEach(function (fila, fi) {
+        fila.forEach(function (columna, ci) {
+          if (columna > 0) {
+            ctx.fillStyle = color[columna];
+            ctx.fillRect(x + ci * w, y + fi * h, w, h);
+          }
+        });
+      });
+    }
+  }, {
+    key: "cambiarDeTama\xF1o",
+    value: function cambiarDeTamaño() {
+      this.w = this.juego.wj / 11;
+      this.h = this.juego.h / 15;
+      this.limite.i = this.juego.wi;
+      this.limite.d = this.juego.wd;
+      this.posicion.y = this.juego.h - this.h - 20;
+    }
+  }, {
+    key: "izquierda",
+    value: function izquierda() {
+      this.velocidad.x = -this.velocidad.max;
+    }
+  }, {
+    key: "derecha",
+    value: function derecha() {
+      this.velocidad.x = this.velocidad.max;
+    }
+  }, {
+    key: "detener",
+    value: function detener() {
+      this.velocidad.x = 0;
+    }
+  }]);
+
+  return Nave;
+}();
+
+exports.default = Nave;
+},{}],"colision.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.colision = colision;
+
+function colision(objeto1, objeto2) {
+  var p = {
+    d: objeto1.posicion.y + objeto1.h,
+    u: objeto1.posicion.y,
+    l: objeto1.posicion.x,
+    r: objeto1.posicion.x + objeto1.w
+  };
+  var o = {
+    d: objeto2.posicion.y + objeto2.h,
+    u: objeto2.posicion.y,
+    l: objeto2.posicion.x,
+    r: objeto2.posicion.x + objeto2.w
+  };
+
+  if (p.r >= o.l && p.l <= o.r && p.u < o.d && p.d > o.u) {
+    return true;
+  }
+
+  return false;
+}
+},{}],"laser.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20766,6 +20727,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+//import firebase from "firebase/database";
 var Laser = /*#__PURE__*/function () {
   function Laser(juego, x, y, tipo) {
     _classCallCheck(this, Laser);
@@ -20810,20 +20772,6 @@ var Laser = /*#__PURE__*/function () {
               var db = (0, _database.getDatabase)();
               (0, _database.set)((0, _database.ref)(db, 'testvalue/'), {
                 value: valuedatapuntos
-              });
-            };
-
-            var readUserData = function readUserData() {
-              console.log("read");
-              var dbRef = (0, _database.ref)((0, _database.getDatabase)());
-              (0, _database.get)((0, _database.child)(dbRef, "testvalue/value")).then(function (snapshot) {
-                if (snapshot.exists()) {
-                  console.log(snapshot.val());
-                } else {
-                  console.log("No data available");
-                }
-              }).catch(function (error) {
-                console.error(error);
               });
             };
 
@@ -21989,12 +21937,13 @@ exports.default = Juego;
 
 require("./styles.css");
 
-var _app = require("firebase/app");
+var _database = require("firebase/database");
 
 var _juego = _interopRequireDefault(require("./juego.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//import { initializeApp } from "firebase";
 var juego = new _juego.default(document.getElementById("pantalla"));
 var tiempoPasado = 0; // Your web app's Firebase configuration
 
@@ -22008,9 +21957,32 @@ var firebaseConfig = {
   appId: "1:861620168064:web:0f43262878120e69948d65"
 }; // Initialize Firebase
 
-var app = (0, _app.initializeApp)(firebaseConfig);
+function readUserData() {
+  var databdd;
+  console.log("read");
+  var dbRef = (0, _database.ref)((0, _database.getDatabase)());
+  (0, _database.get)((0, _database.child)(dbRef, "testvalue/direction")).then(function (snapshot) {
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+      databdd = snapshot.val();
+      return databdd;
+    } else {
+      console.log("No data available");
+    }
+  }).catch(function (error) {
+    console.error(error);
+  });
+  return databdd;
+}
 
 function cicloDeJuego(tiempo) {
+  /*  let databdd=readUserData()
+    if (databdd < 0){
+      juego.nave.izquierda()
+    }
+    if (databdd > 0){
+      juego.nave.derecha()
+    }*/
   var tiempoDelta = tiempo - tiempoPasado;
   tiempoPasado = tiempo;
   juego.actualizar(tiempoDelta);
@@ -22019,7 +21991,7 @@ function cicloDeJuego(tiempo) {
 }
 
 requestAnimationFrame(cicloDeJuego);
-},{"./styles.css":"styles.css","firebase/app":"node_modules/firebase/app/dist/index.esm.js","./juego.js":"juego.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"styles.css","firebase/database":"node_modules/firebase/database/dist/index.esm.js","./juego.js":"juego.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -22047,7 +22019,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58497" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63914" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
