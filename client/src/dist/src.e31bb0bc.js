@@ -21994,6 +21994,8 @@ var _app = require("firebase/app");
 
 var _juego = _interopRequireDefault(require("./juego.js"));
 
+var _database = require("firebase/database");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var juego = new _juego.default(document.getElementById("pantalla"));
@@ -22010,8 +22012,23 @@ var firebaseConfig = {
 }; // Initialize Firebase
 
 var app = (0, _app.initializeApp)(firebaseConfig);
+var database = (0, _database.getDatabase)();
+var dbRef = (0, _database.ref)((0, _database.getDatabase)());
+
+function readdirection() {
+  (0, _database.get)((0, _database.child)(dbRef, "testvalue/direction")).then(function (snapshot) {
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+    } else {
+      console.log("No data available");
+    }
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
 
 function cicloDeJuego(tiempo) {
+  readdirection();
   var tiempoDelta = tiempo - tiempoPasado;
   tiempoPasado = tiempo;
   juego.actualizar(tiempoDelta);
@@ -22020,7 +22037,7 @@ function cicloDeJuego(tiempo) {
 }
 
 requestAnimationFrame(cicloDeJuego);
-},{"./styles.css":"styles.css","firebase/app":"node_modules/firebase/app/dist/index.esm.js","./juego.js":"juego.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"styles.css","firebase/app":"node_modules/firebase/app/dist/index.esm.js","./juego.js":"juego.js","firebase/database":"node_modules/firebase/database/dist/index.esm.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -22048,7 +22065,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65100" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63914" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,6 +2,9 @@ import "./styles.css";
 import { initializeApp } from "firebase/app";
 
 
+
+
+
 import Juego from "./juego.js";
 let juego = new Juego(document.getElementById("pantalla"));
 let tiempoPasado = 0;
@@ -20,8 +23,28 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+import { getDatabase, ref, child, get } from "firebase/database";
+
+
+const database = getDatabase();
+
+
+const dbRef = ref(getDatabase());
+function readdirection(){
+  get(child(dbRef, `testvalue/direction`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+
 
 function cicloDeJuego(tiempo) {
+  readdirection()
   let tiempoDelta = tiempo - tiempoPasado;
   tiempoPasado = tiempo;
   juego.actualizar(tiempoDelta);
