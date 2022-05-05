@@ -1,6 +1,6 @@
-import { colision } from "./colision.js";
-import { getDatabase, ref, set } from "firebase/database";
-//import firebase from "firebase/database";
+import {colision} from "./colision.js";
+import {child, get, getDatabase, ref, set} from "firebase/database";
+
 
 export default class Laser {
   constructor(juego, x, y, tipo) {
@@ -22,6 +22,7 @@ export default class Laser {
     };
     this.borde = 1;
   }
+
   dibujar() {
     this.disparo(
       this.juego.ctx,
@@ -34,9 +35,10 @@ export default class Laser {
       this.borde
     );
   }
+
   actualizar() {
     this.cambiarDeTamaño();
-    var valuedatapuntos ;
+    var valuedatapuntos;
     this.posicion.y += this.velocidad[this.tipo];
     if (this.tipo === "n") {
       this.juego.invasores.forEach(invasor => {
@@ -47,15 +49,28 @@ export default class Laser {
           function writeUserData() {
             const db = getDatabase();
             set(ref(db, 'testvalue/'), {
-              value : valuedatapuntos
+              value: valuedatapuntos
             });
-          }function readUserData() {
-            const db = getDatabase();
-            get(ref(db, 'testvalue/value'));
-            console.log(get(ref(db, 'testvalue/value')));
           }
+
           writeUserData()
+
+          function readUserData() {
+            console.log("read")
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `testvalue/value`)).then((snapshot) => {
+              if (snapshot.exists()) {
+                console.log(snapshot.val());
+              } else {
+                console.log("No data available");
+              }
+            }).catch((error) => {
+              console.error(error);
+            });
+          }
+
           readUserData()
+
 
           /*const dbRefObjectArticleCONTENU1 = firebase.database().ref().child('testvalue');
           dbRefObjectArticleCONTENU1.on('value', snap => {this.juego.puntos = snap.val()});
@@ -76,6 +91,7 @@ export default class Laser {
       }
     }
   }
+
   disparo(ctx, x, y, w, h, exterior, interior, borde) {
     //Circulo Exterior
     ctx.fillStyle = exterior;

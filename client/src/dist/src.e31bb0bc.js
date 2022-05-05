@@ -20766,7 +20766,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-//import firebase from "firebase/database";
 var Laser = /*#__PURE__*/function () {
   function Laser(juego, x, y, tipo) {
     _classCallCheck(this, Laser);
@@ -20815,9 +20814,17 @@ var Laser = /*#__PURE__*/function () {
             };
 
             var readUserData = function readUserData() {
-              var db = (0, _database.getDatabase)();
-              get((0, _database.ref)(db, 'testvalue/value'));
-              console.log(get((0, _database.ref)(db, 'testvalue/value')));
+              console.log("read");
+              var dbRef = (0, _database.ref)((0, _database.getDatabase)());
+              (0, _database.get)((0, _database.child)(dbRef, "testvalue/value")).then(function (snapshot) {
+                if (snapshot.exists()) {
+                  console.log(snapshot.val());
+                } else {
+                  console.log("No data available");
+                }
+              }).catch(function (error) {
+                console.error(error);
+              });
             };
 
             _this.juego.puntos += 1;
@@ -22041,7 +22048,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61556" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58497" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
