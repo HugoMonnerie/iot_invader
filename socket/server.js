@@ -1,6 +1,8 @@
-var SerialPort = require('serialport');
-var xbee_api = require('xbee-api');
-var C = xbee_api.constants;
+const SerialPort = require('serialport');
+const {child, get, getDatabase, ref} = require("firebase/database");
+const xbee_api = require('xbee-api');
+const C = xbee_api.constants;
+
 //var storage = require("./storage")
 require('dotenv').config()
 
@@ -23,11 +25,30 @@ xbeeAPI.builder.pipe(serialport);
 
 serialport.on("open", function () {
 
+  let databdd;
+  function readUserData() {
+    console.log("read")
+    const dbRef = ref(getDatabase());
+    get(child(dbRef, `testvalue/value`)).then((snapshot) => {
+      if (snapshot.exists()) {
+         databdd = snapshot.val();
+        return databdd;
+      } else {
+        console.log("No data available");
+      }
+      return databdd;
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
+  readUserData()
+
   setInterval(() => {
     var frame_obj = {
       type: C.FRAME_TYPE.ZIGBEE_TRANSMIT_REQUEST,
       destination64: "0013A20041C3475C",
-      data: "#05$"
+      data: databdd//"#05$"
     };
 
     xbeeAPI.builder.write(frame_obj);
