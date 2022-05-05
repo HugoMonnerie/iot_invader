@@ -22014,14 +22014,19 @@ var firebaseConfig = {
 var app = (0, _app.initializeApp)(firebaseConfig);
 var database = (0, _database.getDatabase)();
 var dbRef = (0, _database.ref)((0, _database.getDatabase)());
+var datadir;
 
 function readdirection() {
   (0, _database.get)((0, _database.child)(dbRef, "testvalue/direction")).then(function (snapshot) {
     if (snapshot.exists()) {
       console.log(snapshot.val());
+      datadir = snapshot.val();
+      return datadir;
     } else {
       console.log("No data available");
     }
+
+    return datadir;
   }).catch(function (error) {
     console.error(error);
   });
@@ -22029,6 +22034,15 @@ function readdirection() {
 
 function cicloDeJuego(tiempo) {
   readdirection();
+
+  if (datadir > 0) {
+    juego.nave.izquierda();
+  }
+
+  if (datadir < 0) {
+    juego.nave.derecha();
+  }
+
   var tiempoDelta = tiempo - tiempoPasado;
   tiempoPasado = tiempo;
   juego.actualizar(tiempoDelta);
@@ -22065,7 +22079,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63914" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65409" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

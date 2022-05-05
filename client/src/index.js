@@ -30,13 +30,18 @@ const database = getDatabase();
 
 
 const dbRef = ref(getDatabase());
+let datadir;
+
 function readdirection(){
   get(child(dbRef, `testvalue/direction`)).then((snapshot) => {
     if (snapshot.exists()) {
       console.log(snapshot.val());
+      datadir = snapshot.val();
+      return datadir
     } else {
       console.log("No data available");
     }
+    return datadir
   }).catch((error) => {
     console.error(error);
   });
@@ -45,6 +50,12 @@ function readdirection(){
 
 function cicloDeJuego(tiempo) {
   readdirection()
+  if (datadir > 0){
+    juego.nave.izquierda()
+  }
+  if (datadir < 0){
+    juego.nave.derecha()
+  }
   let tiempoDelta = tiempo - tiempoPasado;
   tiempoPasado = tiempo;
   juego.actualizar(tiempoDelta);
