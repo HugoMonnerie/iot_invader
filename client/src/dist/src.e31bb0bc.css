@@ -1,0 +1,19 @@
+@font-face {
+  font-family: ARKANOID;
+  src: url("/Arka_solid.8654d0fe.ttf");
+}
+
+body {
+  padding: 10px;
+  margin: 10px;
+  background-color: black;
+  color: white;
+  overflow: hidden;
+}
+
+#pantalla {
+  border: solid #808000 1px;
+}
+
+
+/*# sourceMappingURL=/src.e31bb0bc.css.map */
