@@ -20814,16 +20814,9 @@ var Laser = /*#__PURE__*/function () {
               });
             };
 
-            var readUserData = function readUserData() {
-              var db = (0, _database.getDatabase)();
-              get((0, _database.ref)(db, 'testvalue/value'));
-              console.log(get((0, _database.ref)(db, 'testvalue/value')));
-            };
-
             _this.juego.puntos += 1;
             var valuedatapuntos = _this.juego.puntos;
             writeUserData();
-            readUserData();
             /*const dbRefObjectArticleCONTENU1 = firebase.database().ref().child('testvalue');
             dbRefObjectArticleCONTENU1.on('value', snap => {this.juego.puntos = snap.val()});
             */
@@ -22041,7 +22034,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61556" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56186" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
